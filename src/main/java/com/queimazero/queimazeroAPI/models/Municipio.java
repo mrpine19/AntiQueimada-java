@@ -2,7 +2,6 @@ package com.queimazero.queimazeroAPI.models;
 
 import jakarta.persistence.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -10,14 +9,12 @@ import java.util.List;
 public class Municipio {
 
     @Id
-    @Column(name = "id_municipio")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_municipio", unique = true, nullable = false)
     private Long idMunicipio;
 
-    @Column(name = "nome_municipio")
+    @Column(name = "nome_municipio", unique = true)
     private String nomeMunicipio;
-
-    @Column(name = "cidade_municipio")
-    private String cidadeMunicipio;
 
     @Column(name = "uf_municipio")
     private String ufMunicipio;
@@ -35,9 +32,7 @@ public class Municipio {
     public Municipio(Long idMunicipio, String nomeMunicipio, String cidadeMunicipio, String ufMunicipio) {
         this.idMunicipio = idMunicipio;
         this.nomeMunicipio = nomeMunicipio;
-        this.cidadeMunicipio = cidadeMunicipio;
         this.ufMunicipio = ufMunicipio;
-        this.agricultoresMunicipio = new ArrayList<Agricultor>();
     }
 
     public Long getIdMunicipio() {
@@ -54,14 +49,6 @@ public class Municipio {
 
     public void setNomeMunicipio(String nomeMunicipio) {
         this.nomeMunicipio = nomeMunicipio;
-    }
-
-    public String getCidadeMunicipio() {
-        return cidadeMunicipio;
-    }
-
-    public void setCidadeMunicipio(String cidadeMunicipio) {
-        this.cidadeMunicipio = cidadeMunicipio;
     }
 
     public String getUfMunicipio() {

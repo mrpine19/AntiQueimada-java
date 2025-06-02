@@ -11,6 +11,7 @@ public class Agricultor {
 
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_agricultor")
     private Long idAgricultor;
 
@@ -18,7 +19,7 @@ public class Agricultor {
     private String nomeAgricultor;
 
     @Column(name = "telefone_agricultor")
-    private Integer telefoneAgricultor;
+    private String telefoneAgricultor;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_municipio")
@@ -30,7 +31,7 @@ public class Agricultor {
     public Agricultor() {
     }
 
-    public Agricultor(Long idAgricultor, String nomeAgricultor, Integer telefoneAgricultor, Municipio municipio) {
+    public Agricultor(Long idAgricultor, String nomeAgricultor, String telefoneAgricultor, Municipio municipio) {
         this.idAgricultor = idAgricultor;
         this.nomeAgricultor = nomeAgricultor;
         this.telefoneAgricultor = telefoneAgricultor;
@@ -54,11 +55,11 @@ public class Agricultor {
         this.nomeAgricultor = nomeAgricultor;
     }
 
-    public Integer getTelefoneAgricultor() {
+    public String getTelefoneAgricultor() {
         return telefoneAgricultor;
     }
 
-    public void setTelefoneAgricultor(Integer telefoneAgricultor) {
+    public void setTelefoneAgricultor(String telefoneAgricultor) {
         this.telefoneAgricultor = telefoneAgricultor;
     }
 
