@@ -21,7 +21,7 @@ public class Agricultor {
     @Column(name = "telefone_agricultor")
     private String telefoneAgricultor;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_municipio")
     private Municipio municipio;
 

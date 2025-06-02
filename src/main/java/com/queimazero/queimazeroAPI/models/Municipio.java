@@ -1,5 +1,6 @@
 package com.queimazero.queimazeroAPI.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -20,6 +21,7 @@ public class Municipio {
     private String ufMunicipio;
 
     @OneToMany(mappedBy = "municipio", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<Agricultor> agricultoresMunicipio;
 
     @OneToMany(mappedBy = "municipio", cascade = CascadeType.ALL, orphanRemoval = true)
