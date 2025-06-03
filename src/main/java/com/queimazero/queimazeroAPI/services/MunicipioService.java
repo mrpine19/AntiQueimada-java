@@ -27,12 +27,23 @@ public class MunicipioService {
         return municipioRepository.save(municipio);
     }
 
-    public Municipio consultarMunicipio(Long id) {
+    public Municipio consultarMunicipioPorId(Long id) {
         Optional<Municipio> municipio = this.municipioRepository.findById(id);
 
         if (municipio.isEmpty()) {
             throw new RuntimeException(
                     "Município não encontrado! Id: " + id + ", Tipo: " + Municipio.class.getName());
+        }
+
+        return municipio.get();
+    }
+
+    public Municipio consultarMunicipioPorNome(String nome) {
+        Optional<Municipio> municipio = this.municipioRepository.findByNomeMunicipio(nome);
+
+        if (municipio.isEmpty()) {
+            throw new RuntimeException(
+                    "Município não encontrado! Nome: " + nome + ", Tipo: " + Municipio.class.getName());
         }
 
         return municipio.get();

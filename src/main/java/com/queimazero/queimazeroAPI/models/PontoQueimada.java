@@ -14,13 +14,13 @@ public class PontoQueimada {
     @Column(name = "id_queimada")
     private Long id;
 
-    @Column(name = "data_queimada")
+    @Column(name = "data_queimada", columnDefinition = "TIMESTAMP")
     private LocalDateTime dataQueimada;
 
     @Column(name = "intensidade", length = 20)
-    private String intensidade;
+    private String intensidadeQueimada;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_municipio", nullable = false)
     private Municipio municipio;
 
@@ -30,10 +30,10 @@ public class PontoQueimada {
     public PontoQueimada() {
     }
 
-    public PontoQueimada(Long id, LocalDateTime dataQueimada, String intensidade, Municipio municipio, List<AlertaChatbot> alertas) {
+    public PontoQueimada(Long id, LocalDateTime dataQueimada, String intensidadeQueimada, Municipio municipio, List<AlertaChatbot> alertas) {
         this.id = id;
         this.dataQueimada = dataQueimada;
-        this.intensidade = intensidade;
+        this.intensidadeQueimada = intensidadeQueimada;
         this.municipio = municipio;
         this.alertas = alertas;
     }
@@ -54,12 +54,12 @@ public class PontoQueimada {
         this.dataQueimada = dataQueimada;
     }
 
-    public String getIntensidade() {
-        return intensidade;
+    public String getIntensidadeQueimada() {
+        return intensidadeQueimada;
     }
 
-    public void setIntensidade(String intensidade) {
-        this.intensidade = intensidade;
+    public void setIntensidadeQueimada(String intensidade) {
+        this.intensidadeQueimada = intensidade;
     }
 
     public Municipio getMunicipio() {

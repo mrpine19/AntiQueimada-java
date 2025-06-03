@@ -23,7 +23,7 @@ public class MunicipioController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Municipio> consultarMunicipio(@PathVariable Long id){
-        Municipio municipio = municipioService.consultarMunicipio(id);
+        Municipio municipio = municipioService.consultarMunicipioPorId(id);
         return new ResponseEntity<>(municipio, HttpStatus.OK);
     }
 }
