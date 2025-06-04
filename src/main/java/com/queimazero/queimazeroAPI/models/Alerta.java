@@ -5,13 +5,20 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "TB_ALERTA_CHATBOT")
-public class AlertaChatbot {
+@Table(name = "TB_ALERTA")
+public class Alerta {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_alerta")
     private Long id;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_agricultor", nullable = false)
+    private Agricultor agricultor;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_queimada", nullable = false)
+    private PontoQueimada pontoQueimada;
 
     @Column(name = "mensagem_alerta", length = 200)
     private String mensagem;
@@ -22,24 +29,13 @@ public class AlertaChatbot {
     @Column(name = "data_envio")
     private LocalDateTime dataEnvio;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_agricultor", nullable = false)
-    private Agricultor agricultor;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_queimada", nullable = false)
-    private PontoQueimada pontoQueimada;
-
-    public AlertaChatbot() {
+    public Alerta() {
     }
 
-    public AlertaChatbot(Long id, String mensagem, Character alertaEnviado, LocalDateTime dataEnvio, Agricultor agricultor, PontoQueimada pontoQueimada) {
-        this.id = id;
+    public Alerta(String mensagem, PontoQueimada pontoQueimada, Agricultor agricultor) {
         this.mensagem = mensagem;
-        this.alertaEnviado = alertaEnviado;
-        this.dataEnvio = dataEnvio;
-        this.agricultor = agricultor;
         this.pontoQueimada = pontoQueimada;
+        this.agricultor = agricultor;
     }
 
     public Long getId() {
@@ -48,6 +44,22 @@ public class AlertaChatbot {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Agricultor getAgricultor() {
+        return agricultor;
+    }
+
+    public void setAgricultor(Agricultor agricultor) {
+        this.agricultor = agricultor;
+    }
+
+    public PontoQueimada getPontoQueimada() {
+        return pontoQueimada;
+    }
+
+    public void setPontoQueimada(PontoQueimada pontoQueimada) {
+        this.pontoQueimada = pontoQueimada;
     }
 
     public String getMensagem() {
@@ -72,21 +84,5 @@ public class AlertaChatbot {
 
     public void setDataEnvio(LocalDateTime dataEnvio) {
         this.dataEnvio = dataEnvio;
-    }
-
-    public Agricultor getAgricultor() {
-        return agricultor;
-    }
-
-    public void setAgricultor(Agricultor agricultor) {
-        this.agricultor = agricultor;
-    }
-
-    public PontoQueimada getPontoQueimada() {
-        return pontoQueimada;
-    }
-
-    public void setPontoQueimada(PontoQueimada pontoQueimada) {
-        this.pontoQueimada = pontoQueimada;
     }
 }
