@@ -5,6 +5,7 @@ import com.queimazero.queimazeroAPI.models.Coordenadas;
 import com.queimazero.queimazeroAPI.models.EnderecoAgricultor;
 import com.queimazero.queimazeroAPI.models.dto.AgricultorDTO;
 import com.queimazero.queimazeroAPI.repositories.AgricultorRepository;
+import com.queimazero.queimazeroAPI.repositories.MunicipioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,12 +17,16 @@ public class AgricultorService {
     @Autowired
     private AgricultorRepository agricultorRepository;
 
+    @Autowired
+    private MunicipioRepository municipioRepository;
+
     public Agricultor salvarAgricultor(AgricultorDTO agricultorDTO) {
 
         Agricultor agricultor = new Agricultor();
         agricultor.setNomeAgricultor(agricultorDTO.getNomeAgricultor());
         agricultor.setTelefoneAgricultor(agricultorDTO.getTelefoneAgricultor());
         agricultor.setEnderecoAgricultor(obterEnderecoAgricultor(agricultorDTO.getEnderecoAgricultor()));
+        agricultor.getEnderecoAgricultor().setMunicipio(municipioRepository.findByNomeMunicipio(agricultorDTO.getMunicipio()));
 
         return agricultorRepository.save(agricultor);
     }

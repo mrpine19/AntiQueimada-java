@@ -39,13 +39,13 @@ public class MunicipioService {
     }
 
     public Municipio consultarMunicipioPorNome(String nome) {
-        Optional<Municipio> municipio = this.municipioRepository.findByNomeMunicipio(nome);
+        Municipio municipio = this.municipioRepository.findByNomeMunicipio(nome);
 
-        if (municipio.isEmpty()) {
+        if (municipio == null) {
             throw new RuntimeException(
                     "Município não encontrado! Nome: " + nome + ", Tipo: " + Municipio.class.getName());
         }
 
-        return municipio.get();
+        return municipio;
     }
 }
