@@ -22,6 +22,8 @@ public class PontoQueimadaService {
         pontoQueimada.setDataQueimada(pontoQueimadaDTO.getDataQueimada());
         pontoQueimada.setIntensidadeQueimada(pontoQueimadaDTO.getIntensidadeQueimada());
         pontoQueimada.setMunicipio(municipioService.consultarMunicipioPorNome(pontoQueimadaDTO.getMunicipio()));
+        pontoQueimada.setLatitudeQueimada(pontoQueimadaDTO.getLatitudeQueimada());
+        pontoQueimada.setLongitudeQueimada(pontoQueimadaDTO.getLongitudeQueimada());
 
         return pontoQueimadaRepository.save(pontoQueimada);
     }

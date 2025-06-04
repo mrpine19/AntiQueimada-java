@@ -86,7 +86,7 @@ public class PontoQueimada {
         return longitudeQueimada;
     }
 
-    public void setLongitudeQueimada(BigDecimal longitudeAgricultor) {
-        this.longitudeQueimada = longitudeAgricultor;
+    public void setLongitudeQueimada(BigDecimal longitudeQueimada) {
+        this.longitudeQueimada = longitudeQueimada;
     }
 }
