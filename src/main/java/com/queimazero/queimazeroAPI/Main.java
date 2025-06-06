@@ -5,19 +5,13 @@ import com.queimazero.queimazeroAPI.services.GeolocalizacaoService;
 
 public class Main {
     public static void main(String[] args) {
-        try {
-            String endereco = "Avenida Matias Beck, 58";
-            Coordenadas coordenadas = GeolocalizacaoService.geocode(endereco);
+        GeolocalizacaoService service = new GeolocalizacaoService();
 
-            if (coordenadas != null) {
-                System.out.println("Endereço: " + endereco);
-                System.out.println("Latitude: " + coordenadas.getLatitude());
-                System.out.println("Longitude: " + coordenadas.getLongitude());
-            } else {
-                System.out.println("Endereço não encontrado.");
-            }
+        try {
+            Coordenadas location = service.obterCoordenadas("Avenida Matias Beck");
+            System.out.println("Latitude: " + location.getLatitude());
+            System.out.println("Longitude: " + location.getLongitude());
         } catch (Exception e) {
-            System.err.println("Erro ao geocodificar: " + e.getMessage());
             e.printStackTrace();
         }
     }

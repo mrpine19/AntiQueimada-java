@@ -9,6 +9,8 @@ import com.queimazero.queimazeroAPI.repositories.MunicipioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -20,7 +22,7 @@ public class AgricultorService {
     @Autowired
     private MunicipioRepository municipioRepository;
 
-    public Agricultor salvarAgricultor(AgricultorDTO agricultorDTO) {
+    public String salvarAgricultor(AgricultorDTO agricultorDTO) {
 
         Agricultor agricultor = new Agricultor();
         agricultor.setNomeAgricultor(agricultorDTO.getNomeAgricultor());
@@ -28,7 +30,19 @@ public class AgricultorService {
         agricultor.setEnderecoAgricultor(obterEnderecoAgricultor(agricultorDTO.getEnderecoAgricultor()));
         agricultor.getEnderecoAgricultor().setMunicipio(municipioRepository.findByNomeMunicipio(agricultorDTO.getMunicipio()));
 
-        return agricultorRepository.save(agricultor);
+        agricultorRepository.save(agricultor);
+
+        return "Agricultor cadastrado com sucesso!";
+    }
+
+    public List<String> salvarAgricultores(List<AgricultorDTO> agricultoresDTO) {
+        List<String> listaAgricultores = new ArrayList<>();
+
+        for (AgricultorDTO dto : agricultoresDTO) {
+            listaAgricultores.add(salvarAgricultor(dto));
+        }
+
+        return listaAgricultores;
     }
 
     public Agricultor consultarAgricultor(Long id) {
@@ -51,7 +65,8 @@ public class AgricultorService {
         endereco.setRuaAgricultor(rua);
         endereco.setNumeroEnderecoAgricultor(Integer.parseInt(numero));
         try {
-            Coordenadas coordenadas = GeolocalizacaoService.geocode(enderecoAgricultor);
+            GeolocalizacaoService geolocalizacaoService = new GeolocalizacaoService();
+            Coordenadas coordenadas = geolocalizacaoService.obterCoordenadas(enderecoAgricultor);
 
             if (coordenadas != null) {
                 endereco.setLatitudeAgricultor(coordenadas.getLatitude());
