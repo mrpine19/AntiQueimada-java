@@ -5,14 +5,16 @@ public class AgricultorDTO {
 
     private String nomeAgricultor;
     private String telefoneAgricultor;
-    private Long municipio;
+    private String enderecoAgricultor;
+    private String municipio;
 
     public AgricultorDTO() {
     }
 
-    public AgricultorDTO(String nomeAgricultor, String telefoneAgricultor, Long municipio) {
+    public AgricultorDTO(String nomeAgricultor, String telefoneAgricultor, String enderecoAgricultor, String municipio) {
         this.nomeAgricultor = nomeAgricultor;
         this.telefoneAgricultor = telefoneAgricultor;
+        this.enderecoAgricultor = enderecoAgricultor;
         this.municipio = municipio;
     }
 
@@ -32,11 +34,19 @@ public class AgricultorDTO {
         this.telefoneAgricultor = telefoneAgricultor;
     }
 
-    public Long getMunicipio() {
+    public String getEnderecoAgricultor() {
+        return enderecoAgricultor;
+    }
+
+    public void setEnderecoAgricultor(String enderecoAgricultor) {
+        this.enderecoAgricultor = enderecoAgricultor;
+    }
+
+    public String getMunicipio() {
         return municipio;
     }
 
-    public void setMunicipio(Long municipio) {
+    public void setMunicipio(String municipio) {
         this.municipio = municipio;
     }
 }

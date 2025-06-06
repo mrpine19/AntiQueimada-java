@@ -6,6 +6,7 @@ import com.queimazero.queimazeroAPI.repositories.PontoQueimadaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -17,13 +18,21 @@ public class PontoQueimadaService {
     @Autowired
     private MunicipioService municipioService;
 
-    public PontoQueimada salvarPontoQueimada(PontoQueimadaDTO pontoQueimadaDTO) {
+    public void salvarPontoQueimada(PontoQueimadaDTO pontoQueimadaDTO) {
         PontoQueimada pontoQueimada = new PontoQueimada();
         pontoQueimada.setDataQueimada(pontoQueimadaDTO.getDataQueimada());
         pontoQueimada.setIntensidadeQueimada(pontoQueimadaDTO.getIntensidadeQueimada());
         pontoQueimada.setMunicipio(municipioService.consultarMunicipioPorNome(pontoQueimadaDTO.getMunicipio()));
+        pontoQueimada.setLatitudeQueimada(pontoQueimadaDTO.getLatitudeQueimada());
+        pontoQueimada.setLongitudeQueimada(pontoQueimadaDTO.getLongitudeQueimada());
 
-        return pontoQueimadaRepository.save(pontoQueimada);
+        pontoQueimadaRepository.save(pontoQueimada);
+    }
+
+    public void salvarPontoQueimada(List<PontoQueimadaDTO> pontoQueimadaDTO) {
+        for(PontoQueimadaDTO dto : pontoQueimadaDTO) {
+            salvarPontoQueimada(dto);
+        }
     }
 
     public PontoQueimada consultarPontoQueimada(Long id) {

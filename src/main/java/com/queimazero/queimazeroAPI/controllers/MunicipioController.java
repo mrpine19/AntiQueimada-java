@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/municipios")
 public class MunicipioController {
@@ -16,9 +18,15 @@ public class MunicipioController {
     private MunicipioService municipioService;
 
     @PostMapping
-    public ResponseEntity<Municipio> criarMunicipio(@RequestBody MunicipioDTO municipioDTO) {
-        Municipio novoMunicipio = municipioService.salvarMunicipio(municipioDTO);
-        return new ResponseEntity<>(novoMunicipio, HttpStatus.CREATED);
+    public String criarMunicipio(@RequestBody MunicipioDTO municipioDTO) {
+        municipioService.salvarMunicipio(municipioDTO);
+        return "Município cadastrado com sucesso";
+    }
+
+    @PostMapping("/batch")
+    public String criarAgricultores(@RequestBody List<MunicipioDTO> municipiosDTO) {
+        municipioService.salvarMunicipio(municipiosDTO);
+        return "Municípios cadastrado com sucesso";
     }
 
     @GetMapping("/{id}")

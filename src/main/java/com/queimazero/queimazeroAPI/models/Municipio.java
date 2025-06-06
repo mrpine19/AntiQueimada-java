@@ -21,8 +21,7 @@ public class Municipio {
     private String ufMunicipio;
 
     @OneToMany(mappedBy = "municipio", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonIgnore
-    private List<Agricultor> agricultoresMunicipio;
+    private List<EnderecoAgricultor> enderecosAgricultor;
 
     @OneToMany(mappedBy = "municipio", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PontoQueimada> queimadas;
@@ -61,11 +60,19 @@ public class Municipio {
         this.ufMunicipio = ufMunicipio;
     }
 
-    public List<Agricultor> getAgricultoresMunicipio() {
-        return agricultoresMunicipio;
+    public List<EnderecoAgricultor> getEnderecosAgricultor() {
+        return enderecosAgricultor;
     }
 
-    public void setAgricultoresMunicipio(List<Agricultor> agricultoresMunicipio) {
-        this.agricultoresMunicipio = agricultoresMunicipio;
+    public void setEnderecosAgricultor(List<EnderecoAgricultor> enderecosAgricultor) {
+        this.enderecosAgricultor = enderecosAgricultor;
+    }
+
+    public List<PontoQueimada> getQueimadas() {
+        return queimadas;
+    }
+
+    public void setQueimadas(List<PontoQueimada> queimadas) {
+        this.queimadas = queimadas;
     }
 }

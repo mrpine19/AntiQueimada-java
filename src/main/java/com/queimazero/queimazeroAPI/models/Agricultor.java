@@ -1,8 +1,8 @@
 package com.queimazero.queimazeroAPI.models;
 
+import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -21,22 +21,18 @@ public class Agricultor {
     @Column(name = "telefone_agricultor")
     private String telefoneAgricultor;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "id_municipio")
-    private Municipio municipio;
-
-    @OneToMany(mappedBy = "agricultor", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<AlertaChatbot> alertas;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "endereco_agricultor")
+    private EnderecoAgricultor enderecoAgricultor;
 
     public Agricultor() {
     }
 
-    public Agricultor(Long idAgricultor, String nomeAgricultor, String telefoneAgricultor, Municipio municipio) {
+    public Agricultor(Long idAgricultor, String nomeAgricultor, String telefoneAgricultor, EnderecoAgricultor enderecoAgricultor) {
         this.idAgricultor = idAgricultor;
         this.nomeAgricultor = nomeAgricultor;
         this.telefoneAgricultor = telefoneAgricultor;
-        this.municipio = municipio;
-        alertas = new ArrayList<>();
+        this.enderecoAgricultor = enderecoAgricultor;
     }
 
     public Long getIdAgricultor() {
@@ -63,11 +59,11 @@ public class Agricultor {
         this.telefoneAgricultor = telefoneAgricultor;
     }
 
-    public Municipio getMunicipio() {
-        return municipio;
+    public EnderecoAgricultor getEnderecoAgricultor() {
+        return enderecoAgricultor;
     }
 
-    public void setMunicipio(Municipio municipio) {
-        this.municipio = municipio;
+    public void setEnderecoAgricultor(EnderecoAgricultor enderecoAgricultor) {
+        this.enderecoAgricultor = enderecoAgricultor;
     }
 }

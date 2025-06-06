@@ -2,8 +2,8 @@ package com.queimazero.queimazeroAPI.models;
 
 import jakarta.persistence.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
 @Table(name = "TB_PONTOS_QUEIMADAS")
@@ -24,18 +24,22 @@ public class PontoQueimada {
     @JoinColumn(name = "id_municipio", nullable = false)
     private Municipio municipio;
 
-    @OneToMany(mappedBy = "pontoQueimada", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<AlertaChatbot>  alertas;
+    @Column(name = "latitude_queimada", precision = 10, scale = 8)
+    private BigDecimal latitudeQueimada;
+
+    @Column(name = "longitude_agricultor", precision = 11, scale = 8)
+    private BigDecimal longitudeQueimada;
 
     public PontoQueimada() {
     }
 
-    public PontoQueimada(Long id, LocalDateTime dataQueimada, String intensidadeQueimada, Municipio municipio, List<AlertaChatbot> alertas) {
+    public PontoQueimada(Long id, LocalDateTime dataQueimada, String intensidadeQueimada, Municipio municipio, BigDecimal latitudeQueimada, BigDecimal longitudeQueimada) {
         this.id = id;
         this.dataQueimada = dataQueimada;
         this.intensidadeQueimada = intensidadeQueimada;
         this.municipio = municipio;
-        this.alertas = alertas;
+        this.latitudeQueimada = latitudeQueimada;
+        this.longitudeQueimada = longitudeQueimada;
     }
 
     public Long getId() {
@@ -70,11 +74,19 @@ public class PontoQueimada {
         this.municipio = municipio;
     }
 
-    public List<AlertaChatbot> getAlertas() {
-        return alertas;
+    public BigDecimal getLatitudeQueimada() {
+        return latitudeQueimada;
     }
 
-    public void setAlertas(List<AlertaChatbot> alertas) {
-        this.alertas = alertas;
+    public void setLatitudeQueimada(BigDecimal latitudeQueimada) {
+        this.latitudeQueimada = latitudeQueimada;
+    }
+
+    public BigDecimal getLongitudeQueimada() {
+        return longitudeQueimada;
+    }
+
+    public void setLongitudeQueimada(BigDecimal longitudeQueimada) {
+        this.longitudeQueimada = longitudeQueimada;
     }
 }
