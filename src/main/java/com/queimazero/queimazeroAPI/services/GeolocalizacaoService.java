@@ -34,13 +34,16 @@ public class GeolocalizacaoService {
 
         // Usar JsonNode para navegar no JSON
         JsonNode rootNode = objectMapper.readTree(response.body());
-        if (rootNode.size() == 0) {
-            throw new IOException("Nenhum resultado encontrado para o endereço fornecido");
+        JsonNode firstResult = rootNode.get(0);
+
+        BigDecimal lat = new BigDecimal("0.0000");
+        BigDecimal lon = new BigDecimal("0.0000");
+
+        if (rootNode.size() != 0) {
+            lat = new BigDecimal(firstResult.get("lat").asText());
+            lon = new BigDecimal(firstResult.get("lon").asText());
         }
 
-        JsonNode firstResult = rootNode.get(0);
-        BigDecimal lat = new BigDecimal(firstResult.get("lat").asText());
-        BigDecimal lon = new BigDecimal(firstResult.get("lon").asText());
 
         return new Coordenadas(lat, lon);
     }

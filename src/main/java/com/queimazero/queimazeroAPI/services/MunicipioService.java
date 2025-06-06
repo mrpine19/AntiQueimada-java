@@ -6,6 +6,7 @@ import com.queimazero.queimazeroAPI.repositories.MunicipioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -14,7 +15,7 @@ public class MunicipioService {
     @Autowired
     private MunicipioRepository municipioRepository;
 
-    public Municipio salvarMunicipio(MunicipioDTO municipioDTO) {
+    public void salvarMunicipio(MunicipioDTO municipioDTO) {
         // Verifica se o município já existe
         if (municipioRepository.existsByNomeMunicipio(municipioDTO.getNomeMunicipio())) {
             throw new RuntimeException("Município já cadastrado");
@@ -24,7 +25,13 @@ public class MunicipioService {
         municipio.setNomeMunicipio(municipioDTO.getNomeMunicipio());
         municipio.setUfMunicipio(municipioDTO.getUfMunicipio());
 
-        return municipioRepository.save(municipio);
+        municipioRepository.save(municipio);
+    }
+
+    public void salvarMunicipio(List<MunicipioDTO> municipioDTO) {
+        for (MunicipioDTO dto : municipioDTO) {
+            salvarMunicipio(dto);
+        }
     }
 
     public Municipio consultarMunicipioPorId(Long id) {

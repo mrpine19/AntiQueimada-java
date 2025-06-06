@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/agricultores")
 public class AgricultorController {
@@ -16,9 +18,15 @@ public class AgricultorController {
     private AgricultorService agricultorService;
 
     @PostMapping
-    public ResponseEntity<Agricultor> criarAgricultor(@RequestBody AgricultorDTO agricultorDTO) {
-        Agricultor novoAgricultor = agricultorService.salvarAgricultor(agricultorDTO);
-        return new ResponseEntity<>(novoAgricultor, HttpStatus.CREATED);
+    public String criarAgricultor(@RequestBody AgricultorDTO agricultorDTO) {
+        agricultorService.salvarAgricultor(agricultorDTO);
+        return "Agricultor cadastrado com sucesso!";
+    }
+
+    @PostMapping("/batch")
+    public String criarAgricultores(@RequestBody List<AgricultorDTO> agricultoresDTO) {
+        agricultorService.salvarAgricultor(agricultoresDTO);
+        return "Agricultores cadastrados com sucesso!";
     }
 
     @GetMapping("/{id}")

@@ -10,7 +10,8 @@ public class EnderecoAgricultor {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idEndereco;
+    @Column(name = "id_endereco_agricultor")
+    private Long idEnderecoAgricultor;
 
     @OneToOne(mappedBy = "enderecoAgricultor")
     private Agricultor agricultor;
@@ -34,12 +35,12 @@ public class EnderecoAgricultor {
     @JoinColumn(name = "id_municipio")
     private Municipio municipio;
 
-    public Long getIdEndereco() {
-        return idEndereco;
+    public Long getIdEnderecoAgricultor() {
+        return idEnderecoAgricultor;
     }
 
-    public void setIdEndereco(Long idEndereco) {
-        this.idEndereco = idEndereco;
+    public void setIdEnderecoAgricultor(Long idEnderecoAgricultor) {
+        this.idEnderecoAgricultor = idEnderecoAgricultor;
     }
 
     public Agricultor getAgricultor() {

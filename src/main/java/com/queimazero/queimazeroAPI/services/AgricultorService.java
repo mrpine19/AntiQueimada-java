@@ -9,7 +9,6 @@ import com.queimazero.queimazeroAPI.repositories.MunicipioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,7 +21,7 @@ public class AgricultorService {
     @Autowired
     private MunicipioRepository municipioRepository;
 
-    public String salvarAgricultor(AgricultorDTO agricultorDTO) {
+    public void salvarAgricultor(AgricultorDTO agricultorDTO) {
 
         Agricultor agricultor = new Agricultor();
         agricultor.setNomeAgricultor(agricultorDTO.getNomeAgricultor());
@@ -31,18 +30,12 @@ public class AgricultorService {
         agricultor.getEnderecoAgricultor().setMunicipio(municipioRepository.findByNomeMunicipio(agricultorDTO.getMunicipio()));
 
         agricultorRepository.save(agricultor);
-
-        return "Agricultor cadastrado com sucesso!";
     }
 
-    public List<String> salvarAgricultores(List<AgricultorDTO> agricultoresDTO) {
-        List<String> listaAgricultores = new ArrayList<>();
-
+    public void salvarAgricultor(List<AgricultorDTO> agricultoresDTO) {
         for (AgricultorDTO dto : agricultoresDTO) {
-            listaAgricultores.add(salvarAgricultor(dto));
+            salvarAgricultor(dto);
         }
-
-        return listaAgricultores;
     }
 
     public Agricultor consultarAgricultor(Long id) {

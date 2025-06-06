@@ -1,5 +1,6 @@
 package com.queimazero.queimazeroAPI.models;
 
+import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 
 import java.util.List;
