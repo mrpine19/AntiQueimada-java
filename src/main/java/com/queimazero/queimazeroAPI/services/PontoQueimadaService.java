@@ -1,6 +1,8 @@
 package com.queimazero.queimazeroAPI.services;
 
+import com.queimazero.queimazeroAPI.models.Municipio;
 import com.queimazero.queimazeroAPI.models.PontoQueimada;
+import com.queimazero.queimazeroAPI.models.dto.MunicipioDTO;
 import com.queimazero.queimazeroAPI.models.dto.PontoQueimadaDTO;
 import com.queimazero.queimazeroAPI.repositories.PontoQueimadaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,10 +21,18 @@ public class PontoQueimadaService {
     private MunicipioService municipioService;
 
     public void salvarPontoQueimada(PontoQueimadaDTO pontoQueimadaDTO) {
+        Municipio municipio = municipioService.consultarMunicipioPorNome(pontoQueimadaDTO.getMunicipio());
+
+        if (municipio == null) {
+            MunicipioDTO municipioDTO = new MunicipioDTO(pontoQueimadaDTO.getMunicipio(), null);
+            municipioService.salvarMunicipio(municipioDTO);
+            municipio = municipioService.consultarMunicipioPorNome(pontoQueimadaDTO.getMunicipio()); // Consulta novamente
+        }
+
         PontoQueimada pontoQueimada = new PontoQueimada();
         pontoQueimada.setDataQueimada(pontoQueimadaDTO.getDataQueimada());
         pontoQueimada.setIntensidadeQueimada(pontoQueimadaDTO.getIntensidadeQueimada());
-        pontoQueimada.setMunicipio(municipioService.consultarMunicipioPorNome(pontoQueimadaDTO.getMunicipio()));
+        pontoQueimada.setMunicipio(municipio);
         pontoQueimada.setLatitudeQueimada(pontoQueimadaDTO.getLatitudeQueimada());
         pontoQueimada.setLongitudeQueimada(pontoQueimadaDTO.getLongitudeQueimada());
 

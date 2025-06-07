@@ -3,7 +3,9 @@ package com.queimazero.queimazeroAPI.services;
 import com.queimazero.queimazeroAPI.models.Agricultor;
 import com.queimazero.queimazeroAPI.models.Coordenadas;
 import com.queimazero.queimazeroAPI.models.EnderecoAgricultor;
+import com.queimazero.queimazeroAPI.models.Municipio;
 import com.queimazero.queimazeroAPI.models.dto.AgricultorDTO;
+import com.queimazero.queimazeroAPI.models.dto.MunicipioDTO;
 import com.queimazero.queimazeroAPI.repositories.AgricultorRepository;
 import com.queimazero.queimazeroAPI.repositories.MunicipioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,15 +21,23 @@ public class AgricultorService {
     private AgricultorRepository agricultorRepository;
 
     @Autowired
-    private MunicipioRepository municipioRepository;
+    private MunicipioService municipioService;
 
     public void salvarAgricultor(AgricultorDTO agricultorDTO) {
+
+        Municipio municipio = municipioService.consultarMunicipioPorNome(agricultorDTO.getMunicipio());
+
+        if (municipio == null) {
+            MunicipioDTO municipioDTO = new MunicipioDTO(agricultorDTO.getMunicipio(), null);
+            municipioService.salvarMunicipio(municipioDTO);
+            municipio = municipioService.consultarMunicipioPorNome(agricultorDTO.getMunicipio()); // Consulta novamente
+        }
 
         Agricultor agricultor = new Agricultor();
         agricultor.setNomeAgricultor(agricultorDTO.getNomeAgricultor());
         agricultor.setTelefoneAgricultor(agricultorDTO.getTelefoneAgricultor());
         agricultor.setEnderecoAgricultor(obterEnderecoAgricultor(agricultorDTO.getEnderecoAgricultor()));
-        agricultor.getEnderecoAgricultor().setMunicipio(municipioRepository.findByNomeMunicipio(agricultorDTO.getMunicipio()));
+        agricultor.getEnderecoAgricultor().setMunicipio(municipio);
 
         agricultorRepository.save(agricultor);
     }

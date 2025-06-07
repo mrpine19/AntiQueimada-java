@@ -4,6 +4,11 @@ public class MunicipioDTO {
     private String nomeMunicipio;
     private String ufMunicipio;
 
+    public MunicipioDTO(String nomeMunicipio, String ufMunicipio) {
+        this.nomeMunicipio = nomeMunicipio;
+        this.ufMunicipio = ufMunicipio;
+    }
+
     public String getNomeMunicipio() {
         return nomeMunicipio;
     }
