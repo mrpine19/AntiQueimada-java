@@ -11,8 +11,18 @@ public class Main {
             Coordenadas location = service.obterCoordenadas("Avenida Matias Beck");
             System.out.println("Latitude: " + location.getLatitude());
             System.out.println("Longitude: " + location.getLongitude());
+            String[] municipiosTeste = {
+                    "Conceição do Araguaia"
+            };
+
+            for (String municipio : municipiosTeste) {
+                String uf = service.buscarUFporMunicipio(municipio);
+                System.out.println(municipio + " - UF: " + uf);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+
     }
 }

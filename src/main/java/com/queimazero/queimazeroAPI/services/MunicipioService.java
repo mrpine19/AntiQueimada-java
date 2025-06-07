@@ -15,10 +15,21 @@ public class MunicipioService {
     @Autowired
     private MunicipioRepository municipioRepository;
 
+    @Autowired
+    private GeolocalizacaoService geolocalizacaoService;
+
     public void salvarMunicipio(MunicipioDTO municipioDTO) {
         // Verifica se o município já existe
-        if (municipioRepository.existsByNomeMunicipio(municipioDTO.getNomeMunicipio())) {
+        if (municipioRepository.existsByNomeMunicipio(municipioDTO.getNomeMunicipio()))
             throw new RuntimeException("Município já cadastrado");
+
+        if (municipioDTO.getUfMunicipio() == null){
+            try {
+                String UF = geolocalizacaoService.buscarUFporMunicipio(municipioDTO.getNomeMunicipio());
+                municipioDTO.setUfMunicipio(UF);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
         }
 
         Municipio municipio = new Municipio();
@@ -46,13 +57,6 @@ public class MunicipioService {
     }
 
     public Municipio consultarMunicipioPorNome(String nome) {
-        Municipio municipio = this.municipioRepository.findByNomeMunicipio(nome);
-
-        if (municipio == null) {
-            throw new RuntimeException(
-                    "Município não encontrado! Nome: " + nome + ", Tipo: " + Municipio.class.getName());
-        }
-
-        return municipio;
+        return this.municipioRepository.findByNomeMunicipio(nome);
     }
 }
