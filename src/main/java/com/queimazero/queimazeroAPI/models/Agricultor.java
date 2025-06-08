@@ -21,8 +21,11 @@ public class Agricultor {
     @Column(name = "telefone_agricultor")
     private String telefoneAgricultor;
 
+    @Column(name = "data_horario_cadastro")
+    private String dataHorarioCadastro;
+
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "endereco_agricultor")
+    @JoinColumn(name = "id_endereco_agricultor")
     private EnderecoAgricultor enderecoAgricultor;
 
     public Agricultor() {
@@ -65,5 +68,13 @@ public class Agricultor {
 
     public void setEnderecoAgricultor(EnderecoAgricultor enderecoAgricultor) {
         this.enderecoAgricultor = enderecoAgricultor;
+    }
+
+    public String getDataHorarioCadastro() {
+        return dataHorarioCadastro;
+    }
+
+    public void setDataHorarioCadastro(String dataHorarioCadastro) {
+        this.dataHorarioCadastro = dataHorarioCadastro;
     }
 }

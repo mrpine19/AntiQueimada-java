@@ -11,6 +11,8 @@ import com.queimazero.queimazeroAPI.repositories.MunicipioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,6 +40,10 @@ public class AgricultorService {
         agricultor.setTelefoneAgricultor(agricultorDTO.getTelefoneAgricultor());
         agricultor.setEnderecoAgricultor(obterEnderecoAgricultor(agricultorDTO.getEnderecoAgricultor()));
         agricultor.getEnderecoAgricultor().setMunicipio(municipio);
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+        String dataFormatada = LocalDateTime.now().format(formatter);
+        agricultor.setDataHorarioCadastro(dataFormatada);
 
         agricultorRepository.save(agricultor);
     }
