@@ -22,9 +22,6 @@ public class EnderecoAgricultor {
     @Column(name = "numero_agricultor")
     private int numeroEnderecoAgricultor;
 
-    @Column(name = "complemento_agricultor")
-    private String complementoAgricultor;
-
     @Column(name = "latitude_agricultor", precision = 10, scale = 8)
     private BigDecimal latitudeAgricultor;
 
@@ -65,14 +62,6 @@ public class EnderecoAgricultor {
 
     public void setNumeroEnderecoAgricultor(int numeroAgricultor) {
         this.numeroEnderecoAgricultor = numeroAgricultor;
-    }
-
-    public String getComplementoAgricultor() {
-        return complementoAgricultor;
-    }
-
-    public void setComplementoAgricultor(String complementoAgricultor) {
-        this.complementoAgricultor = complementoAgricultor;
     }
 
     public BigDecimal getLatitudeAgricultor() {

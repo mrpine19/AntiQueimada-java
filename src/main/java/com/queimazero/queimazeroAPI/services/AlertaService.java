@@ -2,6 +2,7 @@ package com.queimazero.queimazeroAPI.services;
 
 import com.queimazero.queimazeroAPI.models.Agricultor;
 import com.queimazero.queimazeroAPI.models.Alerta;
+import com.queimazero.queimazeroAPI.models.Municipio;
 import com.queimazero.queimazeroAPI.models.PontoQueimada;
 import com.queimazero.queimazeroAPI.repositories.AgricultorRepository;
 import com.queimazero.queimazeroAPI.repositories.AlertaRepository;
@@ -11,6 +12,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,42 +27,63 @@ public class AlertaService {
     @Autowired
     private AlertaRepository alertaRepository;
 
+    @Autowired
+    private TelegramService telegramService; // Novo serviço para enviar mensagens
 
-    @Scheduled(fixedRate = 60000) // Executa a cada 10 minutos
+    // Executa a cada 10 minutos
     public void verificarQueimadasEEnviarAlertas() {
-        // 1. Buscar queimadas recentes (últimos 10 minutos)
-        List<PontoQueimada> queimadasRecentes = pontoQueimadaRepository.findByDataQueimadaAfter(LocalDateTime.now().minusMinutes(10));
+        // Para simulação, vamos criar uma queimada fictícia
+        PontoQueimada queimadaSimulada = new PontoQueimada();
+        Municipio municipioSimulado = new Municipio();
+        municipioSimulado.setNomeMunicipio("Município de Teste");
+        queimadaSimulada.setMunicipio(municipioSimulado);
+        queimadaSimulada.setDataQueimada(LocalDateTime.now());
 
-        if(!queimadasRecentes.isEmpty()) {
-            for (PontoQueimada queimada : queimadasRecentes) {
-                // 2. Buscar agricultores no mesmo município
-                //List<Agricultor> agricultores = agricultorRepository.findByMunicipioNomeMunicipio(queimada.getMunicipio().getNomeMunicipio());
-                List<Agricultor> agricultores = new ArrayList<>();
-                for (Agricultor agricultor : agricultores) {
-                    // 3. Verificar se já existe alerta não enviado para esta combinação
-                    boolean alertaExistente = alertaRepository.existsByAgricultorAndPontoQueimadaAndAlertaEnviado(
-                            agricultor, queimada, 'N');
-                    if (!alertaExistente) {
-                        // 4. Criar mensagem personalizada
-                        String mensagem = String.format(
-                                "ALERTA: Foco de queimada detectado em seu município. Evite usar fogo hoje.");
+        // 2. Buscar agricultores no mesmo município (no caso, apenas você)
+        List<Agricultor> agricultores = new ArrayList<>();
+        Agricultor agricultorTeste = new Agricultor();
+        agricultorTeste.setNomeAgricultor("Gustavo");
+        agricultores.add(agricultorTeste);
 
-                        // 5. Criar e salvar alerta
-                        Alerta alerta = new Alerta(mensagem, queimada, agricultor);
-                        alertaRepository.save(alerta);
+        for (Agricultor agricultor : agricultores) {
+            // 3. Criar mensagem personalizada
+            String mensagem = String.format(
+                    "🚨 ALERTA QUEIMAZERO - BOM JESUS/PI 🚨\n"
+                            + "\n"
+                            + "⚠️ Foco ativo detectado a 5km da sua localização\n"
+                            + "📅 %s | 💨 Vento: %s\n"
+                            + "\n"
+                            + "🔴 AÇÕES IMEDIATAS (SERVIÇO OFICIAL):\n"
+                            + "\n"
+                            + "1️⃣ Isolamento da área:\n"
+                            + "   - Crie aceiro de 3m ao redor da propriedade\n"
+                            + "   - Molhe faixa de 10m junto às cercas\n"
+                            + "\n"
+                            + "2️⃣ Proteção pessoal:\n"
+                            + "   - Use máscara úmida ou pano no rosto\n"
+                            + "   - Vista roupas de algodão (evite sintéticos)\n"
+                            + "\n"
+                            + "3️⃣ Emergências:\n"
+                            + "   - Bombeiros: 193 | Defesa Civil: 199\n"
+                            + "\n"
+                            + "🌫️ Se a fumaça chegar:\n"
+                            + "• Feche portas e janelas\n"
+                            + "• Umedeça cortinas e vãos\n"
+                            + "• Leve animais para áreas abertas sem vegetação\n"
+                            + "\n"
+                            + "📡 Próxima atualização: %s\n"
+                            + "Fonte: INPE/PrevFogo - Sistema de Monitoramento QueimaZero",
 
-                        // 6. Enviar via chatbot
-                        //boolean enviado = chatbotService.enviarAlerta(agricultor.getChatId(), mensagem);
+                    queimadaSimulada.getDataQueimada().format(DateTimeFormatter.ofPattern("dd/MM 'às' HH'h'mm")),
+                    "Noroeste (15km/h)",
+                    LocalDateTime.now().plusMinutes(15).format(DateTimeFormatter.ofPattern("HH'h'mm"))
+            );
 
-                        // 7. Se enviado com sucesso, marcar como enviado
-                        //if (enviado) {
-                        //alerta.marcarComoEnviado();
-                        //alertaChatbotRepository.save(alerta);
-                        //}
-                    }
-                }
-            }
+
+            // 4. Enviar mensagem via Telegram
+            telegramService.enviarMensagem("5695097685", mensagem);
+
+
         }
     }
-
 }

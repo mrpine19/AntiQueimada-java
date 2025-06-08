@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 
 public class PontoQueimadaDTO {
 
-    @JsonFormat(pattern = "dd/MM/yyyy HH:mm")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime dataQueimada;
     private String intensidadeQueimada;
     private String municipio;

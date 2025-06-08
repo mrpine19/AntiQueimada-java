@@ -20,6 +20,9 @@ public class PontoQueimadaService {
     @Autowired
     private MunicipioService municipioService;
 
+    @Autowired
+    private AlertaService alertaService;
+
     public void salvarPontoQueimada(PontoQueimadaDTO pontoQueimadaDTO) {
         Municipio municipio = municipioService.consultarMunicipioPorNome(pontoQueimadaDTO.getMunicipio());
 
@@ -37,6 +40,7 @@ public class PontoQueimadaService {
         pontoQueimada.setLongitudeQueimada(pontoQueimadaDTO.getLongitudeQueimada());
 
         pontoQueimadaRepository.save(pontoQueimada);
+        alertaService.verificarQueimadasEEnviarAlertas();
     }
 
     public void salvarPontoQueimada(List<PontoQueimadaDTO> pontoQueimadaDTO) {
