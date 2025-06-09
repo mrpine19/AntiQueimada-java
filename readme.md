@@ -7,13 +7,13 @@ API RESTful para apoio ao monitoramento e combate a queimadas ilegais, com foco 
 
 ##  Sumário
 
-- [ Objetivo](#-objetivo)
-- [ Estrutura do Projeto](#-estrutura-do-projeto)
-- [ Como Executar](#-como-executar)
-- [ Tecnologias](#-tecnologias)
-- [ Endpoints Principais](#-endpoints-principais)
-- [ Equipe](#-equipe)
-- [ Licença](#-licença)
+- [ Objetivo]
+- [ Estrutura do Projeto]
+- [ Como Executar]
+- [ Tecnologias]
+- [ Endpoints Principais]
+- [ Equipe]
+- [ Licença]
 
 ---
 
